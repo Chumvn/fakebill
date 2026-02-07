@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bill Chuyển Khoản - FakeBill</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>">
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Quay lại</a>
+
+        <header class="header">
+            <h1>💸 Fake Bill</h1>
+            <p>Tạo bill chuyển khoản ngân hàng</p>
+        </header>
+
+        <main class="fade-in">
+            <!-- Bank Selection -->
+            <div class="card">
+                <label class="form-group">
+                    <span style="display:block; margin-bottom:12px; font-weight:600;">Chọn ngân hàng</span>
+                </label>
+                <div class="bank-grid" id="bankGrid">
+                    <div class="bank-item selected" data-bank="vcb" data-name="Vietcombank" data-color="#006A4E">
+                        <img src="https://api.vietqr.io/img/VCB.png" alt="VCB">
+                        <span>VCB</span>
+                    </div>
+                    <div class="bank-item" data-bank="bidv" data-name="BIDV" data-color="#004A91">
+                        <img src="https://api.vietqr.io/img/BIDV.png" alt="BIDV">
+                        <span>BIDV</span>
+                    </div>
+                    <div class="bank-item" data-bank="mb" data-name="MB Bank" data-color="#1E4D91">
+                        <img src="https://api.vietqr.io/img/MB.png" alt="MB">
+                        <span>MB Bank</span>
+                    </div>
+                    <div class="bank-item" data-bank="tech" data-name="Techcombank" data-color="#E31837">
+                        <img src="https://api.vietqr.io/img/TCB.png" alt="TCB">
+                        <span>TCB</span>
+                    </div>
+                    <div class="bank-item" data-bank="acb" data-name="ACB" data-color="#1A1F71">
+                        <img src="https://api.vietqr.io/img/ACB.png" alt="ACB">
+                        <span>ACB</span>
+                    </div>
+                    <div class="bank-item" data-bank="agri" data-name="Agribank" data-color="#E31837">
+                        <img src="https://api.vietqr.io/img/VBA.png" alt="Agri">
+                        <span>Agribank</span>
+                    </div>
+                    <div class="bank-item" data-bank="vpbank" data-name="VPBank" data-color="#046A38">
+                        <img src="https://api.vietqr.io/img/VPB.png" alt="VPBank">
+                        <span>VPBank</span>
+                    </div>
+                    <div class="bank-item" data-bank="tpbank" data-name="TPBank" data-color="#5E2D91">
+                        <img src="https://api.vietqr.io/img/TPB.png" alt="TPBank">
+                        <span>TPBank</span>
+                    </div>
+                    <div class="bank-item" data-bank="scb" data-name="Sacombank" data-color="#0066B3">
+                        <img src="https://api.vietqr.io/img/STB.png" alt="SCB">
+                        <span>Sacombank</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="card">
+                <div class="form-group">
+                    <label>Tên người nhận</label>
+                    <input type="text" class="form-input" id="receiverName" placeholder="NGUYEN VAN A"
+                        value="NGUYEN VAN A">
+                </div>
+                <div class="form-group">
+                    <label>Số tài khoản</label>
+                    <input type="text" class="form-input" id="accountNumber" placeholder="0123456789"
+                        value="0123456789">
+                </div>
+                <div class="form-group">
+                    <label>Số tiền (VNĐ)</label>
+                    <input type="text" class="form-input" id="amount" placeholder="1,000,000" value="1000000">
+                </div>
+                <div class="form-group">
+                    <label>Nội dung chuyển khoản</label>
+                    <input type="text" class="form-input" id="content" placeholder="Chuyen tien" value="Chuyen tien">
+                </div>
+                <div class="form-group">
+                    <label>Ngày giao dịch</label>
+                    <input type="datetime-local" class="form-input" id="transDate">
+                </div>
+                <div class="form-group">
+                    <label>Mã giao dịch</label>
+                    <input type="text" class="form-input" id="transId" placeholder="FT24123456789">
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="card">
+                <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
+                <div class="preview-area" id="previewArea">
+                    <div id="billPreview" class="bill-template" style="display:none;">
+                        <div class="bill-header">
+                            <img id="billBankLogo" src="https://api.vietqr.io/img/VCB.png" alt="Bank">
+                            <div>
+                                <h4 id="billBankName">Vietcombank</h4>
+                                <small style="color:#888;">Chuyển tiền thành công</small>
+                            </div>
+                        </div>
+                        <div class="bill-success">
+                            <div class="icon">✓</div>
+                            <h3>Giao dịch thành công</h3>
+                            <div class="bill-amount" id="billAmount">1,000,000 VNĐ</div>
+                        </div>
+                        <div class="bill-details">
+                            <div class="bill-row">
+                                <span class="label">Người nhận</span>
+                                <span class="value" id="billReceiver">NGUYEN VAN A</span>
+                            </div>
+                            <div class="bill-row">
+                                <span class="label">Số tài khoản</span>
+                                <span class="value" id="billAccount">0123456789</span>
+                            </div>
+                            <div class="bill-row">
+                                <span class="label">Nội dung</span>
+                                <span class="value" id="billContent">Chuyen tien</span>
+                            </div>
+                            <div class="bill-row">
+                                <span class="label">Thời gian</span>
+                                <span class="value" id="billTime">07/02/2026 11:00</span>
+                            </div>
+                            <div class="bill-row">
+                                <span class="label">Mã giao dịch</span>
+                                <span class="value" id="billTransId">FT24123456789</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-placeholder" id="placeholder">
+                        <span>📄</span>
+                        <p>Nhấn "Tạo Bill" để xem trước</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generateBill()">✨ Tạo Bill</button>
+                <button class="btn btn-success" onclick="downloadBill()" id="downloadBtn" disabled>📥 Tải Ảnh</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="https://github.com/chumvn/fakebill" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="js/bill.js"></script>
+</body>
+
+</html>

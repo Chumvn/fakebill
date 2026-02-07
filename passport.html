@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Hộ Chiếu - FakeBill</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛂</text></svg>">
+    <style>
+        .passport-template {
+            background: linear-gradient(135deg, #1e4d2b 0%, #0a2412 100%);
+            border-radius: 8px;
+            padding: 24px;
+            width: 100%;
+            max-width: 380px;
+            color: #d4af37;
+            position: relative;
+            font-family: 'Courier New', monospace;
+        }
+
+        .passport-header {
+            text-align: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .passport-header .emblem {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .passport-header h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .passport-header small {
+            display: block;
+            font-size: 0.7rem;
+            color: rgba(212, 175, 55, 0.7);
+            margin-top: 4px;
+        }
+
+        .passport-body {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .passport-photo {
+            width: 100px;
+            height: 130px;
+            background: #ddd;
+            border: 2px solid #d4af37;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .passport-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .passport-info {
+            flex: 1;
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        .passport-row {
+            margin-bottom: 8px;
+        }
+
+        .passport-row .label {
+            color: rgba(212, 175, 55, 0.8);
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        .passport-row .value {
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .passport-number {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 3px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .passport-mrz {
+            background: white;
+            color: #000;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-family: 'OCR-B', 'Courier New', monospace;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Quay lại</a>
+
+        <header class="header">
+            <h1>🛂 Fake Hộ Chiếu</h1>
+            <p>Tạo hộ chiếu Việt Nam</p>
+        </header>
+
+        <main class="fade-in">
+            <!-- Form -->
+            <div class="card">
+                <div class="form-group">
+                    <label>Số hộ chiếu</label>
+                    <input type="text" class="form-input" id="passportNumber" placeholder="C1234567" value="C1234567"
+                        maxlength="9">
+                </div>
+                <div class="form-group">
+                    <label>Họ (Surname)</label>
+                    <input type="text" class="form-input" id="surname" placeholder="NGUYEN" value="NGUYEN">
+                </div>
+                <div class="form-group">
+                    <label>Tên đệm và tên (Given names)</label>
+                    <input type="text" class="form-input" id="givenNames" placeholder="VAN A" value="VAN A">
+                </div>
+                <div class="form-group">
+                    <label>Ngày sinh</label>
+                    <input type="date" class="form-input" id="birthDate" value="1990-01-15">
+                </div>
+                <div class="form-group">
+                    <label>Giới tính</label>
+                    <select class="form-input" id="gender">
+                        <option value="M">Nam (M)</option>
+                        <option value="F">Nữ (F)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nơi sinh</label>
+                    <input type="text" class="form-input" id="birthPlace" value="TP HO CHI MINH">
+                </div>
+                <div class="form-group">
+                    <label>Ngày cấp</label>
+                    <input type="date" class="form-input" id="issueDate" value="2023-01-15">
+                </div>
+                <div class="form-group">
+                    <label>Ngày hết hạn</label>
+                    <input type="date" class="form-input" id="expiryDate" value="2033-01-15">
+                </div>
+                <div class="form-group">
+                    <label>Ảnh hộ chiếu</label>
+                    <input type="file" class="form-input" id="photoUpload" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="card">
+                <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
+                <div class="preview-area" id="previewArea">
+                    <div id="passportPreview" class="passport-template" style="display:none;">
+                        <div class="passport-header">
+                            <div class="emblem">🇻🇳</div>
+                            <h3>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h3>
+                            <small>Socialist Republic of Vietnam</small>
+                            <h3 style="margin-top:8px;">Hộ Chiếu / Passport</h3>
+                        </div>
+                        <div class="passport-number" id="prevPassportNum">C1234567</div>
+                        <div class="passport-body">
+                            <div class="passport-photo">
+                                <img id="previewPhoto"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Crect fill='%23ddd' width='100' height='130'/%3E%3Ctext x='50' y='70' text-anchor='middle' fill='%23999' font-size='12'%3EẢnh%3C/text%3E%3C/svg%3E"
+                                    alt="Photo">
+                            </div>
+                            <div class="passport-info">
+                                <div class="passport-row">
+                                    <span class="label">Type / Loại</span>
+                                    <span class="value">P</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Surname / Họ</span>
+                                    <span class="value" id="prevSurname">NGUYEN</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Given names / Tên</span>
+                                    <span class="value" id="prevGiven">VAN A</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Nationality / Quốc tịch</span>
+                                    <span class="value">VIET NAM</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Date of birth / Sinh</span>
+                                    <span class="value" id="prevDob">15/01/1990</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Sex / Giới tính</span>
+                                    <span class="value" id="prevGender">M</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Place of birth / Nơi sinh</span>
+                                    <span class="value" id="prevPlace">TP HCM</span>
+                                </div>
+                                <div class="passport-row">
+                                    <span class="label">Date of expiry / Hết hạn</span>
+                                    <span class="value" id="prevExpiry">15/01/2033</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="passport-mrz" id="prevMrz">
+                            P&lt;VNMNGUYEN&lt;&lt;VAN&lt;A&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+                            C1234567&lt;0VNM9001150M3301150&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;0
+                        </div>
+                    </div>
+                    <div class="preview-placeholder" id="placeholder">
+                        <span>🛂</span>
+                        <p>Nhấn "Tạo Hộ Chiếu" để xem trước</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generatePassport()">✨ Tạo Hộ Chiếu</button>
+                <button class="btn btn-success" onclick="downloadPassport()" id="downloadBtn" disabled>📥 Tải
+                    Ảnh</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="https://github.com/chumvn/fakebill" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        let photoDataUrl = null;
+
+        document.getElementById('photoUpload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    photoDataUrl = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function formatMrzDate(dateStr) {
+            const date = new Date(dateStr);
+            const y = date.getFullYear().toString().slice(-2);
+            const m = (date.getMonth() + 1).toString().padStart(2, '0');
+            const d = date.getDate().toString().padStart(2, '0');
+            return y + m + d;
+        }
+
+        function padRight(str, len) {
+            return (str + '<'.repeat(len)).slice(0, len);
+        }
+
+        function generatePassport() {
+            const passportNum = document.getElementById('passportNumber').value.toUpperCase();
+            const surname = document.getElementById('surname').value.toUpperCase().replace(/ /g, '<');
+            const given = document.getElementById('givenNames').value.toUpperCase().replace(/ /g, '<');
+            const dob = document.getElementById('birthDate').value;
+            const gender = document.getElementById('gender').value;
+            const place = document.getElementById('birthPlace').value.toUpperCase();
+            const expiry = document.getElementById('expiryDate').value;
+
+            document.getElementById('prevPassportNum').textContent = passportNum;
+            document.getElementById('prevSurname').textContent = surname.replace(/</g, ' ');
+            document.getElementById('prevGiven').textContent = given.replace(/</g, ' ');
+            document.getElementById('prevDob').textContent = formatDate(dob);
+            document.getElementById('prevGender').textContent = gender;
+            document.getElementById('prevPlace').textContent = place;
+            document.getElementById('prevExpiry').textContent = formatDate(expiry);
+
+            if (photoDataUrl) {
+                document.getElementById('previewPhoto').src = photoDataUrl;
+            }
+
+            // Generate MRZ
+            const line1 = 'P<VNM' + padRight(surname + '<<' + given, 39);
+            const line2 = padRight(passportNum, 9) + '0VNM' + formatMrzDate(dob) + gender + formatMrzDate(expiry) + padRight('', 14) + '0';
+            document.getElementById('prevMrz').innerHTML = line1 + '<br>' + line2;
+
+            document.getElementById('placeholder').style.display = 'none';
+            document.getElementById('passportPreview').style.display = 'block';
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        async function downloadPassport() {
+            const preview = document.getElementById('passportPreview');
+            try {
+                const canvas = await html2canvas(preview, { scale: 2, backgroundColor: null });
+                const link = document.createElement('a');
+                link.download = `passport_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                alert('Có lỗi khi tạo ảnh.');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Biến Động Số Dư - FakeBill</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <style>
+        .notification-template {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 16px;
+            width: 100%;
+            max-width: 380px;
+            color: white;
+        }
+
+        .notif-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .notif-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .notif-header .app-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .notif-header .time {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .notif-body {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .notif-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4ade80;
+        }
+
+        .notif-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .notif-detail {
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Quay lại</a>
+
+        <header class="header">
+            <h1>📊 Biến Động Số Dư</h1>
+            <p>Tạo thông báo biến động số dư</p>
+        </header>
+
+        <main class="fade-in">
+            <!-- Bank Selection -->
+            <div class="card">
+                <label class="form-group">
+                    <span style="display:block; margin-bottom:12px; font-weight:600;">Chọn ngân hàng</span>
+                </label>
+                <div class="bank-grid" id="bankGrid">
+                    <div class="bank-item selected" data-bank="vcb" data-name="Vietcombank">
+                        <img src="https://api.vietqr.io/img/VCB.png" alt="VCB">
+                        <span>VCB</span>
+                    </div>
+                    <div class="bank-item" data-bank="bidv" data-name="BIDV">
+                        <img src="https://api.vietqr.io/img/BIDV.png" alt="BIDV">
+                        <span>BIDV</span>
+                    </div>
+                    <div class="bank-item" data-bank="mb" data-name="MB Bank">
+                        <img src="https://api.vietqr.io/img/MB.png" alt="MB">
+                        <span>MB Bank</span>
+                    </div>
+                    <div class="bank-item" data-bank="tech" data-name="Techcombank">
+                        <img src="https://api.vietqr.io/img/TCB.png" alt="TCB">
+                        <span>TCB</span>
+                    </div>
+                    <div class="bank-item" data-bank="acb" data-name="ACB">
+                        <img src="https://api.vietqr.io/img/ACB.png" alt="ACB">
+                        <span>ACB</span>
+                    </div>
+                    <div class="bank-item" data-bank="agri" data-name="Agribank">
+                        <img src="https://api.vietqr.io/img/VBA.png" alt="Agri">
+                        <span>Agribank</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="card">
+                <div class="form-group">
+                    <label>Số tài khoản</label>
+                    <input type="text" class="form-input" id="accountNumber" placeholder="0123456789"
+                        value="0123456789">
+                </div>
+                <div class="form-group">
+                    <label>Số tiền nhận (+) / Trừ (-)</label>
+                    <input type="text" class="form-input" id="amount" placeholder="+5,000,000" value="+5000000">
+                </div>
+                <div class="form-group">
+                    <label>Số dư hiện tại</label>
+                    <input type="text" class="form-input" id="balance" placeholder="15,000,000" value="15000000">
+                </div>
+                <div class="form-group">
+                    <label>Nội dung giao dịch</label>
+                    <input type="text" class="form-input" id="content" placeholder="Chuyen tien tu ABC"
+                        value="CT tu NGUYEN VAN B">
+                </div>
+                <div class="form-group">
+                    <label>Thời gian</label>
+                    <input type="datetime-local" class="form-input" id="transDate">
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="card">
+                <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
+                <div class="preview-area" id="previewArea">
+                    <div id="notifPreview" class="notification-template" style="display:none;">
+                        <div class="notif-header">
+                            <img id="notifLogo" src="https://api.vietqr.io/img/VCB.png" alt="Bank">
+                            <span class="app-name" id="notifBankName">Vietcombank</span>
+                            <span class="time" id="notifTime">vừa xong</span>
+                        </div>
+                        <div class="notif-body">
+                            <div class="notif-title">Biến động số dư</div>
+                            <div class="notif-amount" id="notifAmount">+5,000,000 VNĐ</div>
+                            <div class="notif-detail">
+                                <div>TK: <span id="notifAccount">0123456789</span></div>
+                                <div>SD: <span id="notifBalance">15,000,000</span> VNĐ</div>
+                                <div>ND: <span id="notifContent">CT tu NGUYEN VAN B</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-placeholder" id="placeholder">
+                        <span>📱</span>
+                        <p>Nhấn "Tạo Thông Báo" để xem trước</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generateNotif()">✨ Tạo Thông Báo</button>
+                <button class="btn btn-success" onclick="downloadNotif()" id="downloadBtn" disabled>📥 Tải Ảnh</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="https://github.com/chumvn/fakebill" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        let selectedBank = { code: 'vcb', name: 'Vietcombank', logo: 'https://api.vietqr.io/img/VCB.png' };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            document.getElementById('transDate').value = now.toISOString().slice(0, 16);
+
+            document.querySelectorAll('.bank-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.bank-item').forEach(b => b.classList.remove('selected'));
+                    item.classList.add('selected');
+                    selectedBank = {
+                        code: item.dataset.bank,
+                        name: item.dataset.name,
+                        logo: item.querySelector('img').src
+                    };
+                });
+            });
+        });
+
+        function formatCurrency(amount) {
+            const num = parseInt(amount.replace(/[^0-9-]/g, ''));
+            const sign = amount.includes('-') ? '-' : '+';
+            return sign + new Intl.NumberFormat('vi-VN').format(Math.abs(num));
+        }
+
+        function formatBalance(amount) {
+            return new Intl.NumberFormat('vi-VN').format(parseInt(amount.replace(/\D/g, '')));
+        }
+
+        function generateNotif() {
+            const account = document.getElementById('accountNumber').value;
+            const amount = document.getElementById('amount').value;
+            const balance = document.getElementById('balance').value;
+            const content = document.getElementById('content').value;
+            const transDate = document.getElementById('transDate').value;
+
+            document.getElementById('notifLogo').src = selectedBank.logo;
+            document.getElementById('notifBankName').textContent = selectedBank.name;
+            document.getElementById('notifAmount').textContent = formatCurrency(amount) + ' VNĐ';
+            document.getElementById('notifAmount').style.color = amount.includes('-') ? '#f87171' : '#4ade80';
+            document.getElementById('notifAccount').textContent = account;
+            document.getElementById('notifBalance').textContent = formatBalance(balance);
+            document.getElementById('notifContent').textContent = content;
+
+            const date = new Date(transDate);
+            const now = new Date();
+            const diff = Math.floor((now - date) / 60000);
+            document.getElementById('notifTime').textContent = diff < 1 ? 'vừa xong' : diff + ' phút trước';
+
+            document.getElementById('placeholder').style.display = 'none';
+            document.getElementById('notifPreview').style.display = 'block';
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        async function downloadNotif() {
+            const preview = document.getElementById('notifPreview');
+            try {
+                const canvas = await html2canvas(preview, { scale: 2, backgroundColor: null });
+                const link = document.createElement('a');
+                link.download = `bdsd_${selectedBank.code}_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                alert('Có lỗi khi tạo ảnh.');
+            }
+        }
+    </script>
+</body>
+
+</html>

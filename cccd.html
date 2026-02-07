@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake CCCD 2 Mặt - FakeBill</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🆔</text></svg>">
+    <style>
+        .cccd-template {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0a192f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 380px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cccd-template::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3C/svg%3E") no-repeat;
+        }
+
+        .cccd-header {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .cccd-header h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cccd-header small {
+            display: block;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .cccd-body {
+            display: flex;
+            gap: 16px;
+        }
+
+        .cccd-photo {
+            width: 90px;
+            height: 120px;
+            background: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cccd-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cccd-info {
+            flex: 1;
+            font-size: 0.75rem;
+        }
+
+        .cccd-row {
+            margin-bottom: 6px;
+        }
+
+        .cccd-row .label {
+            color: rgba(255, 255, 255, 0.6);
+            display: block;
+            font-size: 0.65rem;
+        }
+
+        .cccd-row .value {
+            font-weight: 600;
+        }
+
+        .cccd-number {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff4444;
+            letter-spacing: 2px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cccd-back {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0a192f 100%);
+            margin-top: 16px;
+        }
+
+        .cccd-back .cccd-body {
+            flex-direction: column;
+        }
+
+        .cccd-qr {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 4px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Quay lại</a>
+
+        <header class="header">
+            <h1>🆔 Fake CCCD</h1>
+            <p>Tạo căn cước công dân 2 mặt</p>
+        </header>
+
+        <main class="fade-in">
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('front')">Mặt Trước</div>
+                <div class="tab" onclick="switchTab('back')">Mặt Sau</div>
+            </div>
+
+            <!-- Front Form -->
+            <div id="frontForm" class="card">
+                <div class="form-group">
+                    <label>Số CCCD</label>
+                    <input type="text" class="form-input" id="cccdNumber" placeholder="012345678901"
+                        value="079203012345" maxlength="12">
+                </div>
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" class="form-input" id="fullName" placeholder="NGUYEN VAN A" value="NGUYEN VAN A">
+                </div>
+                <div class="form-group">
+                    <label>Ngày sinh</label>
+                    <input type="date" class="form-input" id="birthDate" value="1990-01-15">
+                </div>
+                <div class="form-group">
+                    <label>Giới tính</label>
+                    <select class="form-input" id="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quốc tịch</label>
+                    <input type="text" class="form-input" id="nationality" value="Việt Nam">
+                </div>
+                <div class="form-group">
+                    <label>Quê quán</label>
+                    <input type="text" class="form-input" id="hometown" placeholder="Xã A, Huyện B, Tỉnh C"
+                        value="Phường 1, Quận 1, TP Hồ Chí Minh">
+                </div>
+                <div class="form-group">
+                    <label>Nơi thường trú</label>
+                    <input type="text" class="form-input" id="address" placeholder="123 Đường ABC"
+                        value="123 Nguyễn Huệ, Quận 1, TP Hồ Chí Minh">
+                </div>
+                <div class="form-group">
+                    <label>Ảnh chân dung (3x4)</label>
+                    <input type="file" class="form-input" id="photoUpload" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Back Form -->
+            <div id="backForm" class="card hidden">
+                <div class="form-group">
+                    <label>Đặc điểm nhận dạng</label>
+                    <textarea class="form-input" id="features" rows="2"
+                        placeholder="Nốt ruồi ở má trái">Nốt ruồi ở cằm</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Ngày cấp</label>
+                    <input type="date" class="form-input" id="issueDate" value="2021-05-20">
+                </div>
+                <div class="form-group">
+                    <label>Có giá trị đến</label>
+                    <input type="date" class="form-input" id="expiryDate" value="2036-05-20">
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="card">
+                <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
+                <div class="preview-area" id="previewArea">
+                    <!-- Front -->
+                    <div id="cccdFront" class="cccd-template" style="display:none;">
+                        <div class="cccd-header">
+                            <div>
+                                <h3>🇻🇳 Căn Cước Công Dân</h3>
+                                <small>SOCIALIST REPUBLIC OF VIETNAM</small>
+                            </div>
+                        </div>
+                        <div class="cccd-body">
+                            <div class="cccd-photo">
+                                <img id="previewPhoto"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 120'%3E%3Crect fill='%23ddd' width='90' height='120'/%3E%3Ctext x='45' y='65' text-anchor='middle' fill='%23999' font-size='12'%3EẢnh%3C/text%3E%3C/svg%3E"
+                                    alt="Photo">
+                            </div>
+                            <div class="cccd-info">
+                                <div class="cccd-row">
+                                    <span class="label">Họ và tên / Full name</span>
+                                    <span class="value" id="prevName">NGUYEN VAN A</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Ngày sinh / Date of birth</span>
+                                    <span class="value" id="prevDob">15/01/1990</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Giới tính / Sex</span>
+                                    <span class="value" id="prevGender">Nam</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Quốc tịch / Nationality</span>
+                                    <span class="value" id="prevNation">Việt Nam</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Quê quán</span>
+                                    <span class="value" id="prevHometown" style="font-size:0.65rem;">TP Hồ Chí
+                                        Minh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cccd-number" id="prevNumber">079203012345</div>
+                    </div>
+                    <!-- Back -->
+                    <div id="cccdBack" class="cccd-template cccd-back" style="display:none;">
+                        <div class="cccd-header">
+                            <div>
+                                <h3>Mặt Sau CCCD</h3>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:16px;">
+                            <div class="cccd-qr" id="qrCode"></div>
+                            <div class="cccd-info" style="flex:1;">
+                                <div class="cccd-row">
+                                    <span class="label">Đặc điểm nhận dạng</span>
+                                    <span class="value" id="prevFeatures">Nốt ruồi ở cằm</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Ngày cấp</span>
+                                    <span class="value" id="prevIssue">20/05/2021</span>
+                                </div>
+                                <div class="cccd-row">
+                                    <span class="label">Có giá trị đến</span>
+                                    <span class="value" id="prevExpiry">20/05/2036</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-placeholder" id="placeholder">
+                        <span>🆔</span>
+                        <p>Nhấn "Tạo CCCD" để xem trước</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generateCCCD()">✨ Tạo CCCD</button>
+                <button class="btn btn-success" onclick="downloadCCCD()" id="downloadBtn" disabled>📥 Tải Ảnh</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="https://github.com/chumvn/fakebill" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        let currentTab = 'front';
+        let photoDataUrl = null;
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tab === 'front' ? 1 : 2})`).classList.add('active');
+            document.getElementById('frontForm').classList.toggle('hidden', tab !== 'front');
+            document.getElementById('backForm').classList.toggle('hidden', tab !== 'back');
+        }
+
+        document.getElementById('photoUpload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    photoDataUrl = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function generateCCCD() {
+            // Front side
+            document.getElementById('prevName').textContent = document.getElementById('fullName').value.toUpperCase();
+            document.getElementById('prevDob').textContent = formatDate(document.getElementById('birthDate').value);
+            document.getElementById('prevGender').textContent = document.getElementById('gender').value;
+            document.getElementById('prevNation').textContent = document.getElementById('nationality').value;
+            document.getElementById('prevHometown').textContent = document.getElementById('hometown').value;
+            document.getElementById('prevNumber').textContent = document.getElementById('cccdNumber').value;
+
+            if (photoDataUrl) {
+                document.getElementById('previewPhoto').src = photoDataUrl;
+            }
+
+            // Back side
+            document.getElementById('prevFeatures').textContent = document.getElementById('features').value;
+            document.getElementById('prevIssue').textContent = formatDate(document.getElementById('issueDate').value);
+            document.getElementById('prevExpiry').textContent = formatDate(document.getElementById('expiryDate').value);
+
+            // Generate QR
+            const qrData = document.getElementById('cccdNumber').value + '|' +
+                document.getElementById('fullName').value + '|' +
+                document.getElementById('birthDate').value;
+            document.getElementById('qrCode').innerHTML = '';
+            QRCode.toCanvas(document.createElement('canvas'), qrData, { width: 80 }, (error, canvas) => {
+                if (!error) {
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    document.getElementById('qrCode').appendChild(canvas);
+                }
+            });
+
+            document.getElementById('placeholder').style.display = 'none';
+            if (currentTab === 'front') {
+                document.getElementById('cccdFront').style.display = 'block';
+                document.getElementById('cccdBack').style.display = 'none';
+            } else {
+                document.getElementById('cccdFront').style.display = 'none';
+                document.getElementById('cccdBack').style.display = 'block';
+            }
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        async function downloadCCCD() {
+            const preview = currentTab === 'front' ?
+                document.getElementById('cccdFront') :
+                document.getElementById('cccdBack');
+            try {
+                const canvas = await html2canvas(preview, { scale: 2, backgroundColor: null });
+                const link = document.createElement('a');
+                link.download = `cccd_${currentTab}_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                alert('Có lỗi khi tạo ảnh.');
+            }
+        }
+    </script>
+</body>
+
+</html>
