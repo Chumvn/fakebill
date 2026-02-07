@@ -8,111 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛂</text></svg>">
-    <style>
-        .passport-template {
-            background: linear-gradient(135deg, #1e4d2b 0%, #0a2412 100%);
-            border-radius: 8px;
-            padding: 24px;
-            width: 100%;
-            max-width: 380px;
-            color: #d4af37;
-            position: relative;
-            font-family: 'Courier New', monospace;
-        }
-
-        .passport-header {
-            text-align: center;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .passport-header .emblem {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-        }
-
-        .passport-header h3 {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .passport-header small {
-            display: block;
-            font-size: 0.7rem;
-            color: rgba(212, 175, 55, 0.7);
-            margin-top: 4px;
-        }
-
-        .passport-body {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .passport-photo {
-            width: 100px;
-            height: 130px;
-            background: #ddd;
-            border: 2px solid #d4af37;
-            border-radius: 4px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .passport-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .passport-info {
-            flex: 1;
-            font-size: 0.75rem;
-            color: white;
-        }
-
-        .passport-row {
-            margin-bottom: 8px;
-        }
-
-        .passport-row .label {
-            color: rgba(212, 175, 55, 0.8);
-            display: block;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-        }
-
-        .passport-row .value {
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        .passport-number {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #d4af37;
-            letter-spacing: 3px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            margin-bottom: 12px;
-        }
-
-        .passport-mrz {
-            background: white;
-            color: #000;
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 0.65rem;
-            font-family: 'OCR-B', 'Courier New', monospace;
-            letter-spacing: 1px;
-            line-height: 1.4;
-        }
-    </style>
 </head>
 
 <body>
@@ -173,60 +68,7 @@
             <div class="card">
                 <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
                 <div class="preview-area" id="previewArea">
-                    <div id="passportPreview" class="passport-template" style="display:none;">
-                        <div class="passport-header">
-                            <div class="emblem">🇻🇳</div>
-                            <h3>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h3>
-                            <small>Socialist Republic of Vietnam</small>
-                            <h3 style="margin-top:8px;">Hộ Chiếu / Passport</h3>
-                        </div>
-                        <div class="passport-number" id="prevPassportNum">C1234567</div>
-                        <div class="passport-body">
-                            <div class="passport-photo">
-                                <img id="previewPhoto"
-                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Crect fill='%23ddd' width='100' height='130'/%3E%3Ctext x='50' y='70' text-anchor='middle' fill='%23999' font-size='12'%3EẢnh%3C/text%3E%3C/svg%3E"
-                                    alt="Photo">
-                            </div>
-                            <div class="passport-info">
-                                <div class="passport-row">
-                                    <span class="label">Type / Loại</span>
-                                    <span class="value">P</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Surname / Họ</span>
-                                    <span class="value" id="prevSurname">NGUYEN</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Given names / Tên</span>
-                                    <span class="value" id="prevGiven">VAN A</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Nationality / Quốc tịch</span>
-                                    <span class="value">VIET NAM</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Date of birth / Sinh</span>
-                                    <span class="value" id="prevDob">15/01/1990</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Sex / Giới tính</span>
-                                    <span class="value" id="prevGender">M</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Place of birth / Nơi sinh</span>
-                                    <span class="value" id="prevPlace">TP HCM</span>
-                                </div>
-                                <div class="passport-row">
-                                    <span class="label">Date of expiry / Hết hạn</span>
-                                    <span class="value" id="prevExpiry">15/01/2033</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="passport-mrz" id="prevMrz">
-                            P&lt;VNMNGUYEN&lt;&lt;VAN&lt;A&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
-                            C1234567&lt;0VNM9001150M3301150&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;0
-                        </div>
-                    </div>
+                    <canvas id="passportCanvas" style="display:none; max-width:100%;"></canvas>
                     <div class="preview-placeholder" id="placeholder">
                         <span>🛂</span>
                         <p>Nhấn "Tạo Hộ Chiếu" để xem trước</p>
@@ -247,9 +89,26 @@
         </footer>
     </div>
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
         let photoDataUrl = null;
+        let generatedCanvas = null;
+
+        // Template positions for passport text overlay
+        const passportTemplate = {
+            src: 'assets/templates/passport.png',
+            positions: {
+                passportNumber: { x: 350, y: 280, fontSize: 28, color: '#000', font: 'bold' },
+                surname: { x: 350, y: 350, fontSize: 22, color: '#000' },
+                givenNames: { x: 350, y: 410, fontSize: 22, color: '#000' },
+                birthDate: { x: 350, y: 470, fontSize: 20, color: '#000' },
+                gender: { x: 350, y: 520, fontSize: 20, color: '#000' },
+                birthPlace: { x: 350, y: 570, fontSize: 18, color: '#000' },
+                issueDate: { x: 350, y: 620, fontSize: 18, color: '#000' },
+                expiryDate: { x: 350, y: 670, fontSize: 18, color: '#000' },
+                photo: { x: 100, y: 300, width: 200, height: 260 },
+                mrz: { x: 50, y: 800, fontSize: 16, color: '#000' }
+            }
+        };
 
         document.getElementById('photoUpload').addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -279,48 +138,109 @@
             return (str + '<'.repeat(len)).slice(0, len);
         }
 
-        function generatePassport() {
+        async function generatePassport() {
+            const canvas = document.getElementById('passportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+
+            return new Promise((resolve, reject) => {
+                img.onload = async () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw template
+                    ctx.drawImage(img, 0, 0);
+
+                    const pos = passportTemplate.positions;
+
+                    // Draw photo if uploaded
+                    if (photoDataUrl) {
+                        const photoImg = new Image();
+                        photoImg.onload = () => {
+                            ctx.drawImage(photoImg, pos.photo.x, pos.photo.y, pos.photo.width, pos.photo.height);
+                            drawPassportText(ctx, pos);
+                        };
+                        photoImg.src = photoDataUrl;
+                    } else {
+                        drawPassportText(ctx, pos);
+                    }
+
+                    document.getElementById('placeholder').style.display = 'none';
+                    canvas.style.display = 'block';
+                    document.getElementById('downloadBtn').disabled = false;
+                    generatedCanvas = canvas;
+                    resolve();
+                };
+
+                img.onerror = () => {
+                    alert('Không thể tải template. Vui lòng thử lại.');
+                    reject();
+                };
+
+                img.src = passportTemplate.src;
+            });
+        }
+
+        function drawPassportText(ctx, pos) {
             const passportNum = document.getElementById('passportNumber').value.toUpperCase();
-            const surname = document.getElementById('surname').value.toUpperCase().replace(/ /g, '<');
-            const given = document.getElementById('givenNames').value.toUpperCase().replace(/ /g, '<');
+            const surname = document.getElementById('surname').value.toUpperCase();
+            const given = document.getElementById('givenNames').value.toUpperCase();
             const dob = document.getElementById('birthDate').value;
             const gender = document.getElementById('gender').value;
             const place = document.getElementById('birthPlace').value.toUpperCase();
+            const issue = document.getElementById('issueDate').value;
             const expiry = document.getElementById('expiryDate').value;
 
-            document.getElementById('prevPassportNum').textContent = passportNum;
-            document.getElementById('prevSurname').textContent = surname.replace(/</g, ' ');
-            document.getElementById('prevGiven').textContent = given.replace(/</g, ' ');
-            document.getElementById('prevDob').textContent = formatDate(dob);
-            document.getElementById('prevGender').textContent = gender;
-            document.getElementById('prevPlace').textContent = place;
-            document.getElementById('prevExpiry').textContent = formatDate(expiry);
+            // Passport number
+            ctx.font = `${pos.passportNumber.font} ${pos.passportNumber.fontSize}px 'Courier New', monospace`;
+            ctx.fillStyle = pos.passportNumber.color;
+            ctx.fillText(passportNum, pos.passportNumber.x, pos.passportNumber.y);
 
-            if (photoDataUrl) {
-                document.getElementById('previewPhoto').src = photoDataUrl;
-            }
+            // Surname
+            ctx.font = `${pos.surname.fontSize}px Arial`;
+            ctx.fillText(surname, pos.surname.x, pos.surname.y);
+
+            // Given names
+            ctx.fillText(given, pos.givenNames.x, pos.givenNames.y);
+
+            // Birth date
+            ctx.font = `${pos.birthDate.fontSize}px Arial`;
+            ctx.fillText(formatDate(dob), pos.birthDate.x, pos.birthDate.y);
+
+            // Gender
+            ctx.fillText(gender, pos.gender.x, pos.gender.y);
+
+            // Birth place
+            ctx.font = `${pos.birthPlace.fontSize}px Arial`;
+            ctx.fillText(place, pos.birthPlace.x, pos.birthPlace.y);
+
+            // Issue date
+            ctx.fillText(formatDate(issue), pos.issueDate.x, pos.issueDate.y);
+
+            // Expiry date
+            ctx.fillText(formatDate(expiry), pos.expiryDate.x, pos.expiryDate.y);
 
             // Generate MRZ
-            const line1 = 'P<VNM' + padRight(surname + '<<' + given, 39);
+            const surnameClean = surname.replace(/ /g, '<');
+            const givenClean = given.replace(/ /g, '<');
+            const line1 = 'P<VNM' + padRight(surnameClean + '<<' + givenClean, 39);
             const line2 = padRight(passportNum, 9) + '0VNM' + formatMrzDate(dob) + gender + formatMrzDate(expiry) + padRight('', 14) + '0';
-            document.getElementById('prevMrz').innerHTML = line1 + '<br>' + line2;
 
-            document.getElementById('placeholder').style.display = 'none';
-            document.getElementById('passportPreview').style.display = 'block';
-            document.getElementById('downloadBtn').disabled = false;
+            ctx.font = `${pos.mrz.fontSize}px 'Courier New', monospace`;
+            ctx.fillStyle = pos.mrz.color;
+            ctx.fillText(line1, pos.mrz.x, pos.mrz.y);
+            ctx.fillText(line2, pos.mrz.x, pos.mrz.y + 22);
         }
 
-        async function downloadPassport() {
-            const preview = document.getElementById('passportPreview');
-            try {
-                const canvas = await html2canvas(preview, { scale: 2, backgroundColor: null });
-                const link = document.createElement('a');
-                link.download = `passport_${Date.now()}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            } catch (error) {
-                alert('Có lỗi khi tạo ảnh.');
-            }
+        function downloadPassport() {
+            if (!generatedCanvas) return;
+
+            const link = document.createElement('a');
+            link.download = `passport_${Date.now()}.png`;
+            link.href = generatedCanvas.toDataURL('image/png');
+            link.click();
         }
     </script>
 </body>

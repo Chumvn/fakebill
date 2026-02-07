@@ -15,52 +15,38 @@
         <a href="index.html" class="back-btn">← Quay lại</a>
 
         <header class="header">
-            <h1>💸 Fake Bill</h1>
+            <h1>💸 Fake Bill Chuyển Khoản</h1>
             <p>Tạo bill chuyển khoản ngân hàng</p>
         </header>
 
         <main class="fade-in">
             <!-- Bank Selection -->
             <div class="card">
-                <label class="form-group">
-                    <span style="display:block; margin-bottom:12px; font-weight:600;">Chọn ngân hàng</span>
-                </label>
-                <div class="bank-grid" id="bankGrid">
-                    <div class="bank-item selected" data-bank="vcb" data-name="Vietcombank" data-color="#006A4E">
-                        <img src="https://api.vietqr.io/img/VCB.png" alt="VCB">
-                        <span>VCB</span>
-                    </div>
-                    <div class="bank-item" data-bank="bidv" data-name="BIDV" data-color="#004A91">
+                <h3 style="margin-bottom:16px; font-weight:600;">Chọn ngân hàng</h3>
+                <div class="bank-grid">
+                    <div class="bank-item active" data-bank="bidv" onclick="selectBank('bidv')">
                         <img src="https://api.vietqr.io/img/BIDV.png" alt="BIDV">
                         <span>BIDV</span>
                     </div>
-                    <div class="bank-item" data-bank="mb" data-name="MB Bank" data-color="#1E4D91">
-                        <img src="https://api.vietqr.io/img/MB.png" alt="MB">
-                        <span>MB Bank</span>
+                    <div class="bank-item" data-bank="vcb" onclick="selectBank('vcb')">
+                        <img src="https://api.vietqr.io/img/VCB.png" alt="Vietcombank">
+                        <span>VCB</span>
                     </div>
-                    <div class="bank-item" data-bank="tech" data-name="Techcombank" data-color="#E31837">
-                        <img src="https://api.vietqr.io/img/TCB.png" alt="TCB">
-                        <span>TCB</span>
-                    </div>
-                    <div class="bank-item" data-bank="acb" data-name="ACB" data-color="#1A1F71">
+                    <div class="bank-item" data-bank="acb" onclick="selectBank('acb')">
                         <img src="https://api.vietqr.io/img/ACB.png" alt="ACB">
                         <span>ACB</span>
                     </div>
-                    <div class="bank-item" data-bank="agri" data-name="Agribank" data-color="#E31837">
-                        <img src="https://api.vietqr.io/img/VBA.png" alt="Agri">
+                    <div class="bank-item" data-bank="mb" onclick="selectBank('mb')">
+                        <img src="https://api.vietqr.io/img/MB.png" alt="MBBank">
+                        <span>MBBank</span>
+                    </div>
+                    <div class="bank-item" data-bank="tcb" onclick="selectBank('tcb')">
+                        <img src="https://api.vietqr.io/img/TCB.png" alt="Techcombank">
+                        <span>TCB</span>
+                    </div>
+                    <div class="bank-item" data-bank="agri" onclick="selectBank('agri')">
+                        <img src="https://api.vietqr.io/img/ICB.png" alt="Agribank">
                         <span>Agribank</span>
-                    </div>
-                    <div class="bank-item" data-bank="vpbank" data-name="VPBank" data-color="#046A38">
-                        <img src="https://api.vietqr.io/img/VPB.png" alt="VPBank">
-                        <span>VPBank</span>
-                    </div>
-                    <div class="bank-item" data-bank="tpbank" data-name="TPBank" data-color="#5E2D91">
-                        <img src="https://api.vietqr.io/img/TPB.png" alt="TPBank">
-                        <span>TPBank</span>
-                    </div>
-                    <div class="bank-item" data-bank="scb" data-name="Sacombank" data-color="#0066B3">
-                        <img src="https://api.vietqr.io/img/STB.png" alt="SCB">
-                        <span>Sacombank</span>
                     </div>
                 </div>
             </div>
@@ -68,30 +54,45 @@
             <!-- Form -->
             <div class="card">
                 <div class="form-group">
+                    <label>Số tiền chuyển</label>
+                    <input type="text" class="form-input" id="amount" placeholder="100,000" value="1,000,000">
+                </div>
+                <div class="form-group">
+                    <label>Số tài khoản người nhận</label>
+                    <input type="text" class="form-input" id="stkNhan" placeholder="123456789" value="1234567890">
+                </div>
+                <div class="form-group">
                     <label>Tên người nhận</label>
-                    <input type="text" class="form-input" id="receiverName" placeholder="NGUYEN VAN A"
-                        value="NGUYEN VAN A">
+                    <input type="text" class="form-input" id="nameNhan" placeholder="NGUYEN VAN A" value="NGUYEN VAN A">
                 </div>
                 <div class="form-group">
-                    <label>Số tài khoản</label>
-                    <input type="text" class="form-input" id="accountNumber" placeholder="0123456789"
-                        value="0123456789">
-                </div>
-                <div class="form-group">
-                    <label>Số tiền (VNĐ)</label>
-                    <input type="text" class="form-input" id="amount" placeholder="1,000,000" value="1000000">
+                    <label>Ngân hàng nhận</label>
+                    <select class="form-input" id="bankNhan">
+                        <option value="BIDV">BIDV</option>
+                        <option value="Vietcombank">Vietcombank</option>
+                        <option value="ACB">ACB</option>
+                        <option value="MBBank">MBBank</option>
+                        <option value="Techcombank">Techcombank</option>
+                        <option value="Agribank">Agribank</option>
+                        <option value="VPBank">VPBank</option>
+                        <option value="TPBank">TPBank</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Nội dung chuyển khoản</label>
-                    <input type="text" class="form-input" id="content" placeholder="Chuyen tien" value="Chuyen tien">
+                    <input type="text" class="form-input" id="noidung" placeholder="Chuyen tien" value="Chuyen tien">
                 </div>
                 <div class="form-group">
-                    <label>Ngày giao dịch</label>
-                    <input type="datetime-local" class="form-input" id="transDate">
+                    <label>Thời gian điện thoại</label>
+                    <input type="text" class="form-input" id="timeDt" placeholder="12:30">
+                </div>
+                <div class="form-group">
+                    <label>Thời gian trên bill</label>
+                    <input type="text" class="form-input" id="timeBill" placeholder="07/02/2026">
                 </div>
                 <div class="form-group">
                     <label>Mã giao dịch</label>
-                    <input type="text" class="form-input" id="transId" placeholder="FT24123456789">
+                    <input type="text" class="form-input" id="magiaodich" placeholder="123456">
                 </div>
             </div>
 
@@ -99,44 +100,9 @@
             <div class="card">
                 <h3 style="margin-bottom:16px; font-weight:600;">Xem trước</h3>
                 <div class="preview-area" id="previewArea">
-                    <div id="billPreview" class="bill-template" style="display:none;">
-                        <div class="bill-header">
-                            <img id="billBankLogo" src="https://api.vietqr.io/img/VCB.png" alt="Bank">
-                            <div>
-                                <h4 id="billBankName">Vietcombank</h4>
-                                <small style="color:#888;">Chuyển tiền thành công</small>
-                            </div>
-                        </div>
-                        <div class="bill-success">
-                            <div class="icon">✓</div>
-                            <h3>Giao dịch thành công</h3>
-                            <div class="bill-amount" id="billAmount">1,000,000 VNĐ</div>
-                        </div>
-                        <div class="bill-details">
-                            <div class="bill-row">
-                                <span class="label">Người nhận</span>
-                                <span class="value" id="billReceiver">NGUYEN VAN A</span>
-                            </div>
-                            <div class="bill-row">
-                                <span class="label">Số tài khoản</span>
-                                <span class="value" id="billAccount">0123456789</span>
-                            </div>
-                            <div class="bill-row">
-                                <span class="label">Nội dung</span>
-                                <span class="value" id="billContent">Chuyen tien</span>
-                            </div>
-                            <div class="bill-row">
-                                <span class="label">Thời gian</span>
-                                <span class="value" id="billTime">07/02/2026 11:00</span>
-                            </div>
-                            <div class="bill-row">
-                                <span class="label">Mã giao dịch</span>
-                                <span class="value" id="billTransId">FT24123456789</span>
-                            </div>
-                        </div>
-                    </div>
+                    <canvas id="billCanvas" style="display:none; max-width:100%;"></canvas>
                     <div class="preview-placeholder" id="placeholder">
-                        <span>📄</span>
+                        <span>💸</span>
                         <p>Nhấn "Tạo Bill" để xem trước</p>
                     </div>
                 </div>
@@ -154,8 +120,179 @@
         </footer>
     </div>
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="js/bill.js"></script>
+    <script>
+        let selectedBank = 'bidv';
+        let templateImage = null;
+
+        // Bank templates with text positions
+        const bankTemplates = {
+            bidv: {
+                src: 'assets/templates/bidv.png',
+                textPositions: {
+                    time: { x: 110, y: 65, fontSize: 27, color: '#000', font: 'SFProText-Semibold' },
+                    amount: { x: 'center', y: 690, fontSize: 36, color: '#0380ad', font: 'Mulish-Bold' },
+                    magiaodich: { x: 'right', y: 756, fontSize: 23, color: '#757575', font: 'Mulish-Bold', rightOffset: 315 },
+                    description: { x: 'center', y: 850, fontSize: 26, color: '#3d4457', font: 'Mulish-SemiBold' }
+                }
+            },
+            vcb: {
+                src: 'assets/templates/vcb.png',
+                textPositions: {
+                    time: { x: 110, y: 65, fontSize: 27, color: '#000', font: 'SFProText-Semibold' },
+                    amount: { x: 'center', y: 650, fontSize: 36, color: '#006b4d', font: 'Mulish-Bold' },
+                    magiaodich: { x: 'right', y: 720, fontSize: 23, color: '#757575', font: 'Mulish-Bold', rightOffset: 315 },
+                    description: { x: 'center', y: 800, fontSize: 26, color: '#3d4457', font: 'Mulish-SemiBold' }
+                }
+            },
+            acb: {
+                src: 'assets/templates/acb.png',
+                textPositions: {
+                    time: { x: 110, y: 65, fontSize: 27, color: '#000', font: 'SFProText-Semibold' },
+                    amount: { x: 'center', y: 690, fontSize: 36, color: '#e30613', font: 'Mulish-Bold' },
+                    magiaodich: { x: 'right', y: 756, fontSize: 23, color: '#757575', font: 'Mulish-Bold', rightOffset: 315 },
+                    description: { x: 'center', y: 850, fontSize: 26, color: '#3d4457', font: 'Mulish-SemiBold' }
+                }
+            },
+            mb: { src: 'assets/templates/mb.png', textPositions: {} },
+            tcb: { src: 'assets/templates/tcb.png', textPositions: {} },
+            agri: { src: 'assets/templates/agribank.png', textPositions: {} }
+        };
+
+        // Set default time
+        const now = new Date();
+        document.getElementById('timeDt').value = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('timeBill').value = now.toLocaleDateString('vi-VN');
+        document.getElementById('magiaodich').value = Math.floor(100000 + Math.random() * 900000);
+
+        function selectBank(bank) {
+            selectedBank = bank;
+            document.querySelectorAll('.bank-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.bank === bank);
+            });
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Auto format amount input
+        document.getElementById('amount').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/[^\d]/g, '');
+            if (value) {
+                e.target.value = formatNumber(value);
+            }
+        });
+
+        async function generateBill() {
+            const template = bankTemplates[selectedBank];
+            const canvas = document.getElementById('billCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Load template image
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw template
+                    ctx.drawImage(img, 0, 0);
+
+                    // Get input values
+                    const amount = document.getElementById('amount').value;
+                    const stkNhan = document.getElementById('stkNhan').value;
+                    const nameNhan = document.getElementById('nameNhan').value.toUpperCase();
+                    const bankNhan = document.getElementById('bankNhan').value;
+                    const noidung = document.getElementById('noidung').value;
+                    const timeDt = document.getElementById('timeDt').value;
+                    const timeBill = document.getElementById('timeBill').value;
+                    const magiaodich = document.getElementById('magiaodich').value;
+
+                    // Draw text overlays
+                    const pos = template.textPositions;
+
+                    // Time
+                    if (pos.time) {
+                        ctx.font = `${pos.time.fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+                        ctx.fillStyle = pos.time.color;
+                        ctx.fillText(timeDt.substring(0, 5), pos.time.x, pos.time.y);
+                    }
+
+                    // Amount (centered)
+                    if (pos.amount) {
+                        const amountText = amount + ' VND';
+                        ctx.font = `bold ${pos.amount.fontSize}px Mulish, sans-serif`;
+                        ctx.fillStyle = pos.amount.color;
+                        const textWidth = ctx.measureText(amountText).width;
+                        const x = (canvas.width - textWidth) / 2;
+                        ctx.fillText(amountText, x, pos.amount.y);
+                    }
+
+                    // Mã giao dịch (right aligned)
+                    if (pos.magiaodich) {
+                        ctx.font = `bold ${pos.magiaodich.fontSize}px Mulish, sans-serif`;
+                        ctx.fillStyle = pos.magiaodich.color;
+                        const textWidth = ctx.measureText(magiaodich).width;
+                        const x = canvas.width - pos.magiaodich.rightOffset - textWidth;
+                        ctx.fillText(magiaodich, x, pos.magiaodich.y);
+                    }
+
+                    // Description (centered, multiline)
+                    if (pos.description) {
+                        const descLine1 = 'Quý khách đã chuyển thành công đến số tài';
+                        const descLine2 = `khoản ${stkNhan}/ ${nameNhan}/ NH ${bankNhan}`;
+                        const descLine3 = `vào lúc ${timeBill} ${timeDt} Nội dung: ${noidung}`;
+
+                        ctx.font = `${pos.description.fontSize}px Mulish, sans-serif`;
+                        ctx.fillStyle = pos.description.color;
+
+                        // Line 1
+                        let textWidth = ctx.measureText(descLine1).width;
+                        ctx.fillText(descLine1, (canvas.width - textWidth) / 2, pos.description.y);
+
+                        // Line 2 (with blue color for account info)
+                        const lineY2 = pos.description.y + 60;
+                        ctx.fillStyle = '#0066ad';
+                        ctx.font = `bold ${pos.description.fontSize}px Mulish, sans-serif`;
+                        textWidth = ctx.measureText(descLine2).width;
+                        ctx.fillText(descLine2, (canvas.width - textWidth) / 2, lineY2);
+
+                        // Line 3
+                        const lineY3 = lineY2 + 60;
+                        ctx.fillStyle = pos.description.color;
+                        ctx.font = `${pos.description.fontSize}px Mulish, sans-serif`;
+                        textWidth = ctx.measureText(descLine3).width;
+                        ctx.fillText(descLine3, (canvas.width - textWidth) / 2, lineY3);
+                    }
+
+                    document.getElementById('placeholder').style.display = 'none';
+                    canvas.style.display = 'block';
+                    document.getElementById('downloadBtn').disabled = false;
+
+                    templateImage = canvas;
+                    resolve();
+                };
+
+                img.onerror = () => {
+                    alert('Không thể tải template. Vui lòng thử lại.');
+                    reject();
+                };
+
+                img.src = template.src;
+            });
+        }
+
+        function downloadBill() {
+            if (!templateImage) return;
+
+            const link = document.createElement('a');
+            link.download = `bill_${selectedBank}_${Date.now()}.png`;
+            link.href = templateImage.toDataURL('image/png');
+            link.click();
+        }
+    </script>
 </body>
 
 </html>
